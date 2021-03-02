@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title> Wyniki Obliczen </title>
+    {{ super() }}
+    <title> Wyniki Obliczen </title>
 
-<style>
-    body{
-        background-color: azure;
+    <style>
+        body{
+            font-family: windlass;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
     }
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-</style>
+    </style>
 {% endblock %}
 
 
@@ -25,13 +28,16 @@ table, th, td {
         </tr>
         <tr>
             <th>Dostawca 1</th>
-            <td>{{data[0]}}</td>
-            <td>{{data[1]}}</td>
+            <td>{{dataForTable[0]}}</td>
+            <td>{{dataForTable[1]}}</td>
         </tr>
         <tr>
             <th>Dostawca 2</th>
-            <td>{{data[2]}}</td>
-            <td>{{data[3]}}</td>
+            <td>{{dataForTable[2]}}</td>
+            <td>{{dataForTable[3]}}</td>
         </tr>
     </table>
+    <h2>cos tam2 : {{dataForLabels[0]}}</h2>
+    <h2>cos tam2 : {{dataForLabels[1]}}</h2>
+    <h2> Calkowity zysk : {{ dataForLabels[2] }} </h2>
 {% endblock %}
