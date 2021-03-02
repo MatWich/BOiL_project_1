@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<h1>Wpisz dane poczatkowe</h1>
+<style>
+    body {
+        background-color: azure;
+    }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+    <form action="/" method="POST">
+        <table>
+            <tr>
+                <th>Zyski</th>
+                <th>Odbiorca 1</th>
+                <th>Odbiorca 2</th>
+            </tr>
+            <tr>
+                <th>Dostawca 1</th>
+                <td><input name="text0" required="required"></td>
+                <td><input name="text1" required="required"></td>
+            </tr>
+            <tr>
+                <th>Dostawca 2</th>
+                <td><input name="text2" required="required"></td>
+                <td><input name="text3" required="required"></td>
+            </tr>
+        </table>
+        <button type="submit"> Przeslij dane</button>
+    </form>
+{% endblock %}

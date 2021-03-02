@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Wyniki Obliczen </title>
+
+<style>
+    body{
+        background-color: azure;
+    }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+<h1>Wyniki obliczen</h1>
+    <table>
+        <tr>
+            <th>Zyski</th>
+            <th>Odbiorca 1</th>
+            <th>Odbiorca 2</th>
+        </tr>
+        <tr>
+            <th>Dostawca 1</th>
+            <td>{{data[0]}}</td>
+            <td>{{data[1]}}</td>
+        </tr>
+        <tr>
+            <th>Dostawca 2</th>
+            <td>{{data[2]}}</td>
+            <td>{{data[3]}}</td>
+        </tr>
+    </table>
+{% endblock %}
