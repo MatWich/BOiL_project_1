@@ -2,40 +2,29 @@
 
 {% block head %}
   {{ super() }}
-    <style>
-        body{
-            font-family: windlass;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        }
-    </style>
-    <title>Dane poczatkowe</title>
+    <title>Insert data</title>
 {% endblock %}
 
-{% block body %}
+{% block content %}
+<h1> Data input </h1>
 <form action="/" method="POST">
     <table>
         <tr>
-            <th>Zyski</th>
-            <th>Odbiorca 1</th>
-            <th>Odbiorca 2</th>
+            <th>Earnings</th>
+            <th>Customer 1</th>
+            <th>Customer 2</th>
         </tr>
         <tr>
-            <th>Dostawca 1</th>
+            <th>Supplier 1</th>
             <td><input name="text0" required="required"></td>
             <td><input name="text1" required="required"></td>
         </tr>
         <tr>
-            <th>Dostawca 2</th>
+            <th>Supplier 2</th>
             <td><input name="text2" required="required"></td>
             <td><input name="text3" required="required"></td>
         </tr>
     </table>
-    <button type="submit"> Przeslij dane</button>
+    <button type="submit"> Send data</button>
 </form>
 {% endblock %}

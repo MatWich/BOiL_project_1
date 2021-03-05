@@ -1,43 +1,32 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block head %}
     {{ super() }}
-    <title> Wyniki Obliczen </title>
-
-    <style>
-        body{
-            font-family: windlass;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    </style>
+    <title> Results </title>
 {% endblock %}
 
 
-{% block body %}
-<h1>Wyniki obliczen</h1>
+{% block content %}
+
+<h1>Results</h1>
     <table>
         <tr>
-            <th>Zyski</th>
-            <th>Odbiorca 1</th>
-            <th>Odbiorca 2</th>
+            <th>Earnings</th>
+            <th>Customer 1</th>
+            <th>Customer 2</th>
         </tr>
         <tr>
-            <th>Dostawca 1</th>
+            <th>Supplier 1</th>
             <td>{{dataForTable[0]}}</td>
             <td>{{dataForTable[1]}}</td>
         </tr>
         <tr>
-            <th>Dostawca 2</th>
+            <th>Supplier 2</th>
             <td>{{dataForTable[2]}}</td>
             <td>{{dataForTable[3]}}</td>
         </tr>
     </table>
-    <h2>cos tam2 : {{dataForLabels[0]}}</h2>
+    <h2>cos tam1 : {{dataForLabels[0]}}</h2>
     <h2>cos tam2 : {{dataForLabels[1]}}</h2>
     <h2> Calkowity zysk : {{ dataForLabels[2] }} </h2>
 {% endblock %}

@@ -1,12 +1,17 @@
+html {
+    font-family: windlass;
+    color: #ffa500
+}
+
 body {
     margin: 2;
-    font-family: windlass;
     background-image: url('../static/imgs/maxresdefault.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
-
-table, th, td {
-    border: 1px solid black;
+table, th, td { 
+    border: 1px, solid, black;
+    border-style: double;
     border-collapse: collapse;
-  }
+    text-align: center;
+    }
