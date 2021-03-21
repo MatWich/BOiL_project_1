@@ -52,3 +52,9 @@ class Optymalizacja:
     # loops the optCheckGrid if it finds positive number returns true
     def is_optimized(self):
         return True if self.wsp_optymalizacji.min() < 0 else False
+
+    """ HELPERS """
+    def print_table(self):
+        print(self.tabela)
+
+    

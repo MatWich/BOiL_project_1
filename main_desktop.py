@@ -24,6 +24,8 @@ def main():
     totalGain = cos_tam2 - cos_tam1  # i ta zmienna tez trzeba
     dataForLabels = [cos_tam1, cos_tam2, totalGain]
 
+    tab_pocz.print_table()
+
 
 if __name__ == "__main__":
     main()

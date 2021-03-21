@@ -8,3 +8,6 @@ class Komorka:
         print(o.cena_sprzedazy, "\t", d.koszty_zakupu, "\t", self.koszt_transportu)
         self.zysk = o.cena_sprzedazy - d.koszty_zakupu - self.koszt_transportu
         self.towar = 0  # ile bd przydzielone (podaz / popyt)
+
+    def __repr__(self):
+        return f" ZYSK: {self.zysk} KOSZT_TRANS: {self.koszt_transportu} TOWAR: {self.towar}"
