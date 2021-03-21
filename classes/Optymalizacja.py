@@ -45,7 +45,7 @@ class Optymalizacja:
 
         for i in range(4):
             indexes.append(np.where(self.tabela == newlist[i] )) # zwraca tablice z dwoma zmiennymi np [1, 0] a wiec szukany jest w [1][0]
-            print("x: ",indexes[i][0], "y: ", indexes[i][1])
+            # print("x: ",indexes[i][0], "y: ", indexes[i][1])
 
         if self.is_balanced():
             indexPointer = 0
@@ -63,10 +63,11 @@ class Optymalizacja:
                         self.komorki[indexes[i + indexPointer][0][0]][indexes[j + indexPointer][1][0]].towar += self.odbiorcy[j].popyt
                         self.dostawcy[i].podaz -= self.odbiorcy[j].popyt
                         self.odbiorcy[j].popyt = 0
+        else:
+            print("Work in progress")
 
-        print(newlist)
-        print()
-        pass
+        # print(newlist)
+        # print()
 
     # next iterations
     def optimize(self):
@@ -88,6 +89,28 @@ class Optymalizacja:
 
     """ HELPERS """
     def print_table(self):
-        print('|' + str(self.tabela[0][0]) + ' |' + str(self.tabela[0][1]) + '|')
-        print("|--------------------------------------------------------------------|")
-        print('|' + str(self.tabela[1][0]) + ' |' + str(self.tabela[1][1]) + '|')
+        str1 = '|' + str(self.tabela[0][0]) + ' |' + str(self.tabela[0][1])
+        str2 = '|' + str(self.tabela[1][0]) + ' |' + str(self.tabela[1][1])
+        str1L = len(str1)
+        str2L = len(str2)
+        if str1L > str2L:
+            lengthString = str1L
+        else:
+            lengthString = str2L
+
+        separator = "|"
+        for _ in range(lengthString-1):
+            separator += '-'
+        separator += '|'
+
+        while len(str1) < lengthString:
+            str1 += ' '
+        str1 += '|'
+
+        while len(str1) < lengthString -1:
+            str2 += ' '
+        str2 += '|'
+
+        print(str1)
+        print(separator)
+        print(str2)
