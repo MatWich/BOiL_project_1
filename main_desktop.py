@@ -18,6 +18,7 @@ def main():
                 "cena_sprzedazy": [30, 22]}
 
     tab_pocz = Optymalizacja(daneDict)
+    tab_pocz.set_up()
     tab_pocz.calc_primary_delivery_plan()
     cos_tam1 = 10
     cos_tam2 = 20
