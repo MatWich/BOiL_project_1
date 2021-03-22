@@ -24,6 +24,7 @@ def main():
     tab_pocz.calc_alfa_beta()
     tab_pocz.calc_opt_factors()
     print('Zooptymalizane: ', tab_pocz.is_optimized())
+    tab_pocz.print_opt_factors()
 
     # cos_tam1 = 10
     # cos_tam2 = 20

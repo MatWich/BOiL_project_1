@@ -27,7 +27,10 @@ class Optymalizacja:
         self.zysk = 0  # zysk
 
     def set_up(self):
-        self.wsp_optymalizacji[0] = -1
+        self.wsp_optymalizacji[0][0] = None
+        self.wsp_optymalizacji[0][1] = None
+        self.wsp_optymalizacji[1][0] = None
+        self.wsp_optymalizacji[1][1] = None
         self.dostawcy = [Dostawca(self.dane["koszty_zakupu"][0], self.dane["podaz"][0]),
                          Dostawca(self.dane["koszty_zakupu"][1], self.dane["podaz"][1])]
         self.odbiorcy = [Odbiorca(self.dane["cena_sprzedazy"][0], self.dane["popyt"][0]),
@@ -117,7 +120,22 @@ class Optymalizacja:
     def is_balanced(self):
         return True if self.popyt == self.podaz else False
 
+    def clear_alfa_and_beta(self):
+        self.alfa = [0, None, None]
+        self.beta = [None, None, None]
+
     """ HELPERS """
+
+    # return 1d array with towar values
+    def return_table(self):
+        arrayToReturn = [self.komorki[0][0].towar, self.komorki[0][1].towar, self.komorki[1][0].towar,
+                         self.komorki[1][1].towar]
+
+        return arrayToReturn
+
+    def calc_total_supply_and_demand(self):
+        self.popyt = self.odbiorcy[0].popyt + self.odbiorcy[1].popyt
+        self.podaz = self.dostawcy[0].podaz + self.dostawcy[1].podaz
 
     def print_table(self):
         str1 = '|' + str(self.komorki[0][0]) + ' |' + str(self.komorki[0][1])
@@ -148,7 +166,7 @@ class Optymalizacja:
             str2 += ' '
         str2 += ' |'
 
-        print(top +'\n' + str1 + '\n' + separator + '\n' + str2 + '\n' + bot)
+        print(top + '\n' + str1 + '\n' + separator + '\n' + str2 + '\n' + bot)
 
     def print_alfa_and_beta(self):
         print("alfy:")
@@ -156,13 +174,37 @@ class Optymalizacja:
         print("beta:")
         print(self.beta)
 
-    # return 1d array with towar values
-    def return_table(self):
-        arrayToReturn = [self.komorki[0][0].towar, self.komorki[0][1].towar, self.komorki[1][0].towar,
-                         self.komorki[1][1].towar]
+    def print_opt_factors(self):
+        print("Wspolczynniki optymalizacji: ")
+        lenghtString = 0
+        top, bot, sep = '|', '|', '|'
 
-        return arrayToReturn
+        str1 = "| " + str(self.wsp_optymalizacji[0][0]).replace(str(np.nan), "x") + " | " + str(
+            self.wsp_optymalizacji[0][1]).replace(str(np.nan), "x")
+        str2 = "| " + str(self.wsp_optymalizacji[1][0]).replace(str(np.nan), "x") + " | " + str(
+            self.wsp_optymalizacji[1][1]).replace(str(np.nan), "x")
 
-    def calc_total_supply_and_demand(self):
-        self.popyt = self.odbiorcy[0].popyt + self.odbiorcy[1].popyt
-        self.podaz = self.dostawcy[0].podaz + self.dostawcy[1].podaz
+        if len(str1) > len(str2):
+            lengthString = len(str1)
+        else:
+            lengthString = len(str2)
+
+        for _ in range(lengthString - 1):
+            sep += '-'
+            top += "¯"
+            bot += "_"
+        sep += '-|'
+        top += "¯|"
+        bot += "_|"
+
+        while len(str1) < lengthString:
+            str1 += ' '
+        str1 += ' |'
+
+        while len(str1) < lengthString - 1:
+            str2 += ' '
+        str2 += ' |'
+
+        print(top + '\n' + str1 + '\n' + sep + '\n' + str2 + '\n' + bot)
+
+
