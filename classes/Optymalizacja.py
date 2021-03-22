@@ -77,7 +77,7 @@ class Optymalizacja:
     def optimize(self):
         counter = 0
         while True:
-            if self.is_optimized() or counter >= 1:
+            if self.is_optimized() or counter >= 10:
                 print("Nie ma co optymalizowac")
                 return self.tabela, self.zysk  # I guess this is what we have to show
             else:
