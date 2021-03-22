@@ -20,11 +20,15 @@ def main():
     tab_pocz = Optymalizacja(daneDict)
     tab_pocz.set_up()
     tab_pocz.calc_primary_delivery_plan()
-    cos_tam1 = 10
-    cos_tam2 = 20
-    totalGain = cos_tam2 - cos_tam1  # i ta zmienna tez trzeba
-    dataForLabels = [cos_tam1, cos_tam2, totalGain]
+    tab_pocz.calc_bases()
+    tab_pocz.calc_alfa_beta()
 
+    # cos_tam1 = 10
+    # cos_tam2 = 20
+    # totalGain = cos_tam2 - cos_tam1  # i ta zmienna tez trzeba
+    # dataForLabels = [cos_tam1, cos_tam2, totalGain]
+
+    tab_pocz.print_alfa_and_beta()
     tab_pocz.print_table()
 
 
