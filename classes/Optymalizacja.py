@@ -51,23 +51,17 @@ class Optymalizacja:
             # print("x: ",indexes[i][0], "y: ", indexes[i][1])
 
         if self.is_balanced():
-            indexPointer = 0
-            for i in range(0, 2, 1):
-                if i == 1:
-                    indexPointer += 1
+            for i in range(4):
+                col, row = indexes[i][0][0], indexes[i][1][0]
+                if self.dostawcy[row].podaz <= self.odbiorcy[col].popyt != 0 and self.dostawcy[row].podaz != 0:
+                    self.komorki[row][col].towar += self.dostawcy[row].podaz
+                    self.odbiorcy[col].popyt -= self.dostawcy[row].podaz
+                    self.dostawcy[row].podaz = 0
 
-                for j in range(0, 2, 1):
-                    if self.dostawcy[i].podaz <= self.odbiorcy[j].popyt != 0 and self.dostawcy[i].podaz != 0:
-                        self.komorki[indexes[i + indexPointer][0][0]][indexes[j + indexPointer][1][0]].towar += \
-                            self.dostawcy[i].podaz
-                        self.odbiorcy[j].popyt -= self.dostawcy[0].podaz
-                        self.dostawcy[i].podaz = 0
-
-                    elif self.odbiorcy[j].popyt < self.dostawcy[i].podaz != 0 and self.odbiorcy[j].popyt != 0:
-                        self.komorki[indexes[i + indexPointer][0][0]][indexes[j + indexPointer][1][0]].towar += \
-                            self.odbiorcy[j].popyt
-                        self.dostawcy[i].podaz -= self.odbiorcy[j].popyt
-                        self.odbiorcy[j].popyt = 0
+                elif self.odbiorcy[col].popyt < self.dostawcy[row].podaz != 0 and self.odbiorcy[col].popyt != 0:
+                    self.komorki[row][col].towar += self.odbiorcy[col].popyt
+                    self.dostawcy[row].podaz -= self.odbiorcy[col].popyt
+                    self.odbiorcy[col].popyt = 0
         else:
             print("Work in progress")
 
@@ -103,10 +97,10 @@ class Optymalizacja:
             if self.komorki[0][1].bazowa:
                 self.beta[1] = self.komorki[0][1].zysk - self.alfa[0]
 
-            if self.komorki[1][0].bazowa and self.beta[0] != None:
+            if self.komorki[1][0].bazowa and self.beta[0] is not None:
                 self.alfa[1] = self.komorki[1][0].zysk - self.beta[0]
 
-            if self.komorki[1][1].bazowa and self.beta[1] != None:
+            if self.komorki[1][1].bazowa and self.beta[1] is not None:
                 self.alfa[1] = self.komorki[1][1].zysk - self.beta[1]
 
     # loops the optCheckGrid if it finds positive number returns true
@@ -128,10 +122,16 @@ class Optymalizacja:
         else:
             lengthString = str2L
 
+        top = "|"
+        bot = "|"
         separator = "|"
         for _ in range(lengthString - 1):
             separator += '-'
+            top += "¯"
+            bot += "_"
         separator += '|'
+        top += "|"
+        bot += "|"
 
         while len(str1) < lengthString:
             str1 += ' '
@@ -140,10 +140,11 @@ class Optymalizacja:
         while len(str1) < lengthString - 1:
             str2 += ' '
         str2 += '|'
-
+        print(top)
         print(str1)
         print(separator)
         print(str2)
+        print(bot)
 
     def print_alfa_and_beta(self):
         print("alfy:")
