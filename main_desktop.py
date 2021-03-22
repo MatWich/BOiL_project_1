@@ -25,7 +25,9 @@ def main():
     tab_pocz.calc_opt_factors()
     print('Zooptymalizane: ', tab_pocz.is_optimized())
     tab_pocz.print_opt_factors()
-
+    print("Before")
+    tab_pocz.print_table()
+    tab_pocz.optimize()
     # cos_tam1 = 10
     # cos_tam2 = 20
     # totalGain = cos_tam2 - cos_tam1  # i ta zmienna tez trzeba

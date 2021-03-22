@@ -31,6 +31,7 @@ class Optymalizacja:
         self.wsp_optymalizacji[0][1] = None
         self.wsp_optymalizacji[1][0] = None
         self.wsp_optymalizacji[1][1] = None
+
         self.dostawcy = [Dostawca(self.dane["koszty_zakupu"][0], self.dane["podaz"][0]),
                          Dostawca(self.dane["koszty_zakupu"][1], self.dane["podaz"][1])]
         self.odbiorcy = [Odbiorca(self.dane["cena_sprzedazy"][0], self.dane["popyt"][0]),
@@ -40,6 +41,7 @@ class Optymalizacja:
                          Komorka(self.odbiorcy[1], self.dostawcy[0], self.dane["koszty_trans_p1"][1])],
                         [Komorka(self.odbiorcy[0], self.dostawcy[1], self.dane["koszty_trans_p2"][0]),
                          Komorka(self.odbiorcy[1], self.dostawcy[1], self.dane["koszty_trans_p2"][1])]]
+
         self.calc_total_supply_and_demand()
         self.tabela = np.array(self.komorki)
 
@@ -74,11 +76,60 @@ class Optymalizacja:
     # next iterations
     def optimize(self):
         counter = 0
-        if self.is_optimized() or counter < 10:
-            return self.tabela, self.zysk  # I guess this is what we have to show
-        else:
-            """If not start optimize"""
-            counter += 1
+        while True:
+            if self.is_optimized() or counter >= 1:
+                print("Nie ma co optymalizowac")
+                return self.tabela, self.zysk  # I guess this is what we have to show
+            else:
+                """If not start optimize"""
+                counter += 1
+                #self.clear()
+
+                newlist = reduce(lambda x, y: x + y, self.komorki)  # zmienia tablice 2d do 1d
+                newlist.sort(key=lambda komorka: komorka.towar, reverse=True)  # sortuje wedlug zysku
+                indexes = []
+
+                for i in range(4):
+                    # zwraca tablice z dwoma zmiennymi np [1, 0] a wiec szukany jest w [1][0]
+                    indexes.append(np.where(self.tabela == newlist[i]))
+                    print("x: ", indexes[i][0], "y: ", indexes[i][1])
+
+                row, col = indexes[2][0][0], indexes[2][1][0]   # najmniejsza wartosc?
+                highest = -9999
+
+                rowToOpt, colToOpt = 0, 0
+                for i in range(0, 2, 1):
+                    for j in range(0, 2, 1):
+                        new = self.wsp_optymalizacji[i][j]
+                        if highest < new and self.komorki[i][j].bazowa is not True:
+                            highest = new
+                            rowToOpt, colToOpt = i, j
+
+                rowWithValueToSub, colWithValueToSub = indexes[2][0][0], indexes[2][1][0]   # najmniejszy towar
+                value = self.komorki[rowWithValueToSub][colWithValueToSub].towar
+
+                if rowToOpt == 0 and colToOpt == 0 or rowToOpt == 1 and colToOpt == 1:
+                    self.komorki[0][0].towar += value
+                    self.komorki[1][1].towar += value
+                    self.komorki[0][1].towar -= value
+                    self.komorki[1][0].towar -= value
+                else:
+                    self.komorki[0][0].towar -= value
+                    self.komorki[1][1].towar -= value
+                    self.komorki[0][1].towar += value
+                    self.komorki[1][0].towar += value
+
+                self.calc_bases()
+                self.calc_alfa_beta()
+                self.calc_opt_factors()
+                print(f"After iteration {counter} ")
+                self.print_table()
+
+
+
+
+
+
 
     def calc_bases(self):
         if self.is_balanced():
@@ -120,9 +171,14 @@ class Optymalizacja:
     def is_balanced(self):
         return True if self.popyt == self.podaz else False
 
-    def clear_alfa_and_beta(self):
+    def clear(self):
         self.alfa = [0, None, None]
         self.beta = [None, None, None]
+        for i in range(0, 2, 1):
+            for j in range(0, 2, 1):
+                self.komorki[i][j].delta = None
+                self.komorki[i][j].bazowa = False
+                self.wsp_optymalizacji[i][j] = None
 
     """ HELPERS """
 
