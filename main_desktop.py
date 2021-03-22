@@ -22,6 +22,8 @@ def main():
     tab_pocz.calc_primary_delivery_plan()
     tab_pocz.calc_bases()
     tab_pocz.calc_alfa_beta()
+    tab_pocz.calc_opt_factors()
+    print('Zooptymalizane: ', tab_pocz.is_optimized())
 
     # cos_tam1 = 10
     # cos_tam2 = 20

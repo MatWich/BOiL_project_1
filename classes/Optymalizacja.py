@@ -52,7 +52,7 @@ class Optymalizacja:
 
         if self.is_balanced():
             for i in range(4):
-                col, row = indexes[i][0][0], indexes[i][1][0]
+                row, col = indexes[i][0][0], indexes[i][1][0]
                 if self.dostawcy[row].podaz <= self.odbiorcy[col].popyt != 0 and self.dostawcy[row].podaz != 0:
                     self.komorki[row][col].towar += self.dostawcy[row].podaz
                     self.odbiorcy[col].popyt -= self.dostawcy[row].podaz
@@ -78,15 +78,15 @@ class Optymalizacja:
             counter += 1
 
     def calc_bases(self):
-        # if self.is_balanced():
-        for i in range(0, 2, 1):
-            for j in range(0, 2, 1):
-                if self.komorki[i][j].towar:
-                    self.komorki[i][j].set_bazowa(True)
-                    self.komorki[i][j].bazowa = True
-                else:
-                    self.komorki[i][j].set_bazowa(False)
-                    self.komorki[i][j].bazowa = False
+        if self.is_balanced():
+            for i in range(0, 2, 1):
+                for j in range(0, 2, 1):
+                    if self.komorki[i][j].towar:
+                        self.komorki[i][j].set_bazowa(True)
+                        self.komorki[i][j].bazowa = True
+                    else:
+                        self.komorki[i][j].set_bazowa(False)
+                        self.komorki[i][j].bazowa = False
 
     def calc_alfa_beta(self):
         if self.is_balanced():
@@ -102,6 +102,13 @@ class Optymalizacja:
 
             if self.komorki[1][1].bazowa and self.beta[1] is not None:
                 self.alfa[1] = self.komorki[1][1].zysk - self.beta[1]
+
+    def calc_opt_factors(self):
+        for i in range(0, 2, 1):
+            for j in range(0, 2, 1):
+                if not self.komorki[i][j].bazowa and self.alfa[i] and self.beta[j]:
+                    self.komorki[i][j].delta = self.komorki[i][j].zysk - self.alfa[i] - self.beta[j]
+                    self.wsp_optymalizacji[i][j] = self.komorki[i][j].delta
 
     # loops the optCheckGrid if it finds positive number returns true
     def is_optimized(self):
@@ -129,22 +136,19 @@ class Optymalizacja:
             separator += '-'
             top += "¯"
             bot += "_"
-        separator += '|'
-        top += "|"
-        bot += "|"
+        separator += '-|'
+        top += "¯|"
+        bot += "_|"
 
         while len(str1) < lengthString:
             str1 += ' '
-        str1 += '|'
+        str1 += ' |'
 
         while len(str1) < lengthString - 1:
             str2 += ' '
-        str2 += '|'
-        print(top)
-        print(str1)
-        print(separator)
-        print(str2)
-        print(bot)
+        str2 += ' |'
+
+        print(top +'\n' + str1 + '\n' + separator + '\n' + str2 + '\n' + bot)
 
     def print_alfa_and_beta(self):
         print("alfy:")
