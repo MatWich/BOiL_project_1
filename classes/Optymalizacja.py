@@ -25,7 +25,9 @@ class Optymalizacja:
         self.podaz = 0
         self.run = True
 
-        self.zysk = 0  # zysk
+        self.zysk = 0 
+        self.koszt = 0
+        self.przychod = 0
 
     def set_up(self):
         self.wsp_optymalizacji[0][0] = None
@@ -126,6 +128,9 @@ class Optymalizacja:
 
                 print(f"After iteration {counter} ")
                 self.print_table()
+                self.calc_total_cost()
+                self.calc_total_income()
+                self.calc_benefit()
                 self.clear()
 
 
@@ -162,6 +167,27 @@ class Optymalizacja:
                 if not self.komorki[i][j].bazowa and self.alfa[i] and self.beta[j]:
                     self.komorki[i][j].delta = self.komorki[i][j].zysk - self.alfa[i] - self.beta[j]
                     self.wsp_optymalizacji[i][j] = self.komorki[i][j].delta
+
+    
+
+    def calc_total_cost(self):
+        for i in range(2):
+            for j in range(2):
+                self.koszt += self.komorki[i][j].towar * (self.komorki[i][j].koszt_transportu + self.dostawcy[i].koszty_zakupu)
+            
+        print("Calkowity koszt:\t", self.koszt)
+
+    def calc_total_income(self):
+        for i in range(2):
+            for j in range(2):
+                self.przychod += self.komorki[i][j].towar * self.odbiorcy[j].cena_sprzedazy
+            
+        print("Calkowity przychod:\t", self.przychod)
+
+    def calc_benefit(self):
+        self.zysk = self.przychod - self.koszt
+
+        print("Zysk pośrednika:\t", self.zysk)
 
     # loops the optCheckGrid if it finds positive number returns true
     def is_optimized(self):
