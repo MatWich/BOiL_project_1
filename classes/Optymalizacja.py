@@ -23,6 +23,7 @@ class Optymalizacja:
         self.dane = dane
         self.popyt = 0
         self.podaz = 0
+        self.run = True
 
         self.zysk = 0  # zysk
 
@@ -76,14 +77,17 @@ class Optymalizacja:
     # next iterations
     def optimize(self):
         counter = 0
-        while True:
+        while self.run:
+            self.calc_bases()
+            self.calc_alfa_beta()
+            self.calc_opt_factors()
             if self.is_optimized() or counter >= 10:
                 print("Nie ma co optymalizowac")
-                return self.tabela, self.zysk  # I guess this is what we have to show
+                self.run = False
+                break   # I guess this is what we have to show
             else:
                 """If not start optimize"""
                 counter += 1
-                #self.clear()
 
                 newlist = reduce(lambda x, y: x + y, self.komorki)  # zmienia tablice 2d do 1d
                 newlist.sort(key=lambda komorka: komorka.towar, reverse=True)  # sortuje wedlug zysku
@@ -95,7 +99,7 @@ class Optymalizacja:
                     print("x: ", indexes[i][0], "y: ", indexes[i][1])
 
                 row, col = indexes[2][0][0], indexes[2][1][0]   # najmniejsza wartosc?
-                highest = -9999
+                highest = -9999     # wsp opt
 
                 rowToOpt, colToOpt = 0, 0
                 for i in range(0, 2, 1):
@@ -119,15 +123,10 @@ class Optymalizacja:
                     self.komorki[0][1].towar += value
                     self.komorki[1][0].towar += value
 
-                self.calc_bases()
-                self.calc_alfa_beta()
-                self.calc_opt_factors()
+
                 print(f"After iteration {counter} ")
                 self.print_table()
-
-
-
-
+                self.clear()
 
 
 
@@ -166,7 +165,13 @@ class Optymalizacja:
 
     # loops the optCheckGrid if it finds positive number returns true
     def is_optimized(self):
-        return True if self.wsp_optymalizacji.min() < 0 else False
+        highest = -999999
+        for i in range(2):
+            for j in range(2):
+                if highest < self.wsp_optymalizacji[i][j]:
+                    highest = self.wsp_optymalizacji[i][j]
+
+        return True if highest < 0 else False
 
     def is_balanced(self):
         return True if self.popyt == self.podaz else False
