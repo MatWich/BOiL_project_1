@@ -21,12 +21,10 @@ def my_post_form():
         op = Optymalizacja(dane)
         op.set_up()
         op.calc_primary_delivery_plan()
-        tableData = op.return_table()
-        cos_tam1 = 10
-        cos_tam2 = 20
-        totalGain = cos_tam2 - cos_tam1 # i ta zmienna tez trzeba
-        dataForLabels = [cos_tam1, cos_tam2, totalGain]
-
+        op.optimize()
+        op.calc_all()
+        tableData = op.get_balanced_komorki_towar()
+        dataForLabels = [op.get_koszt(), op.get_przychod(), op.get_zysk()]
 
         # Musimy przekazac 4 elementowa tablice
         return render_template('results.html', dataForTable=tableData, dataForLabels=dataForLabels)

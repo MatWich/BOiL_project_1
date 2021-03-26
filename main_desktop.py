@@ -35,6 +35,7 @@ def main():
 
     tab_pocz.print_alfa_and_beta()
     tab_pocz.print_table()
+    tab_pocz.print_opt_factors()
 
 
 if __name__ == "__main__":
