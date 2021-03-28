@@ -10,21 +10,49 @@
 <form action="/" method="POST">
     <table>
         <tr>
-            <th>Earnings</th>
-            <th>Customer 1</th>
-            <th>Customer 2</th>
+            <th>Koszty transportu</th>
+            <th>Odbiorca 1</th>
+            <th>Odbiorca 2</th>
         </tr>
         <tr>
-            <th>Supplier 1</th>
+            <th>Dostawca 1</th>
             <td><input name="text0" required="required"></td>
             <td><input name="text1" required="required"></td>
         </tr>
         <tr>
-            <th>Supplier 2</th>
+            <th>Dostawca 2</th>
             <td><input name="text2" required="required"></td>
             <td><input name="text3" required="required"></td>
         </tr>
     </table>
+    <div>
+        <label for="podaz1">Dostawca 1: podaz</label>
+        <input id="podaz1" name="podaz1" size="30" type="text" />
+    
+        <label for="koszt1">koszt</label>
+        <input id="koszt1" name="koszt1" size="30" type="text" />
+    </div>
+    <div>
+        <label for="podaz2">Dostawca 2: podaz</label>
+        <input id="podaz2" name="podaz2" size="30" type="text" />
+    
+        <label for="koszt2">koszt</label>
+        <input id="koszt2" name="koszt2" size="30" type="text" />
+    </div>
+    <div>
+        <label for="popyt1">Odbiorca 1: popyt</label>
+        <input id="popyt1" name="popyt1" size="30" type="text" />
+    
+        <label for="cena1">cena</label>
+        <input id="cena1" name="cena1" size="30" type="text" />
+    </div>
+    <div>
+        <label for="popyt2">Odbiorca 2: popyt</label>
+        <input id="popyt2" name="popyt2" size="30" type="text" />
+    
+        <label for="cena2">cena</label>
+        <input id="cena2" name="cena2" size="30" type="text" />
+    </div>
     <button type="submit"> Send data</button>
 </form>
 {% endblock %}

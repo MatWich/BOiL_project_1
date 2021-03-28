@@ -141,46 +141,15 @@ class Optymalizacja:
             self.calc_bases()
             self.calc_alfa_beta()
             self.calc_opt_factors()
-            if self.is_optimized() or counter >= 10:
+            flag, highest_X, highest_Y = self.is_optimized()
+            if flag or counter >= 10:
                 print("Nie ma co optymalizowac")
                 self.run = False
                 break
             else:
                 """If not start optimize"""
                 counter += 1
-                newlist = reduce(lambda x, y: x + y, self.komorki)  # zmienia tablice 2d do 1d
-                newlist.sort(key=lambda komorka: komorka.towar, reverse=True)  # sortuje wedlug zysku
-                indexes = []
-
-                for i in range(4):
-                    # zwraca tablice z dwoma zmiennymi np [1, 0] a wiec szukany jest w [1][0]
-                    indexes.append(np.where(self.tabela == newlist[i]))
-                    print("x: ", indexes[i][0], "y: ", indexes[i][1])
-
-                row, col = indexes[2][0][0], indexes[2][1][0]  # najmniejsza wartosc?
-                highest = -9999  # wsp opt
-
-                rowToOpt, colToOpt = 0, 0
-                for i in range(0, 2, 1):
-                    for j in range(0, 2, 1):
-                        new = self.wsp_optymalizacji[i][j]
-                        if highest < new and self.komorki[i][j].bazowa is not True:
-                            highest = new
-                            rowToOpt, colToOpt = i, j
-
-                rowWithValueToSub, colWithValueToSub = indexes[2][0][0], indexes[2][1][0]  # najmniejszy towar
-                value = self.komorki[rowWithValueToSub][colWithValueToSub].towar
-
-                if rowToOpt == 0 and colToOpt == 0 or rowToOpt == 1 and colToOpt == 1:
-                    self.komorki[0][0].towar += value
-                    self.komorki[1][1].towar += value
-                    self.komorki[0][1].towar -= value
-                    self.komorki[1][0].towar -= value
-                else:
-                    self.komorki[0][0].towar -= value
-                    self.komorki[1][1].towar -= value
-                    self.komorki[0][1].towar += value
-                    self.komorki[1][0].towar += value
+                self.get_cycle(highest_X, highest_Y)
 
                 print(f"After iteration {counter} ")
                 self.print_table()
@@ -189,6 +158,45 @@ class Optymalizacja:
 
     def not_balanced_optimize(self):
         pass
+
+    def get_cycle(self, x, y): 
+        if x > 0:
+            column = 0
+        
+            for i in range(len(self.wsp_optymalizacji[x])):
+                if self.wsp_optymalizacji[x-1][i] == None and self.wsp_optymalizacji[x][i] == None:
+                    column = i
+                    break
+            
+            tmp = 0
+            if self.komorki[x-1][y].towar < self.komorki[x][column].towar:
+                tmp = self.komorki[x-1][y].towar
+            else:
+                tmp = self.komorki[x][column].towar
+            
+            self.komorki[x][y].towar += tmp
+            self.komorki[x-1][column].towar += tmp
+            self.komorki[x-1][y].towar -= tmp
+            self.komorki[x][column].towar -= tmp
+        else:
+            column = 0
+        
+            for i in range(len(self.wsp_optymalizacji[x])):
+                if self.wsp_optymalizacji[x+1][i] == None and self.wsp_optymalizacji[x][i] == None:
+                    column = i
+                    break
+            
+            tmp = 0
+            if self.komorki[x+1][y].towar < self.komorki[x][column].towar:
+                tmp = self.komorki[x+1][y].towar
+            else:
+                tmp = self.komorki[x][column].towar
+            
+            self.komorki[x][y].towar += tmp
+            self.komorki[x+1][column].towar += tmp
+            self.komorki[x+1][y].towar -= tmp
+            self.komorki[x][column].towar -= tmp
+
 
     ''' CALC ALFA BETA '''
 
@@ -273,7 +281,10 @@ class Optymalizacja:
             for j in range(len(self.wsp_optymalizacji[0])):
                 if highest < self.wsp_optymalizacji[i][j]:
                     highest = self.wsp_optymalizacji[i][j]
-        return True if highest < 0 else False
+                    highest_X = i
+                    highest_Y = j
+
+        return True if highest < 0 else False, highest_X, highest_Y
 
     def calc_all(self):
         self.calc_total_cost()
