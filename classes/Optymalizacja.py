@@ -246,6 +246,15 @@ class Optymalizacja:
     def get_komorki(self):
         return self.komorki
 
+    def get_komorki_zysk(self):
+        tabToReturn = []
+        for i in range(0, len(self.komorki)):
+            for j in range(0, len(self.komorki[0])):
+                tabToReturn.append(self.komorki[i][j].zysk)
+
+        return tabToReturn
+
+
     ##################################### NWM DLACZEGO NIE DZIALA###########################
     def get_komorki_towar(self):
         if self.is_balanced():

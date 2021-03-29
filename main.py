@@ -39,9 +39,9 @@ def my_post_form():
         op.calc_all()
         tableData = op.get_balanced_komorki_towar()
         dataForLabels = [op.get_koszt(), op.get_przychod(), op.get_zysk()]
-
+        cost = op.get_komorki_zysk()
         # Musimy przekazac 4 elementowa tablice
-        return render_template('results.html', dataForTable=tableData, dataForLabels=dataForLabels)
+        return render_template('results.html', dataForTable=tableData, dataForLabels=dataForLabels, cost=cost)
     else:
         return render_template('index.html')
 

@@ -8,28 +8,48 @@
 
 {% block content %}
 
-<h1>Results</h1>
+<h1>Wyniki</h1>
+    <h3> Koszty jednostkowe </h3>
     <table>
         <tr>
-            <th>Earnings</th>
-            <th>Customer 1</th>
-            <th>Customer 2</th>
-            <th>Fake Customer</th>
+            <th>Koszty jedn</th>
+            <th>Odbiorca 1</th>
+            <th>Odbiorca 2</th>
         </tr>
         <tr>
-            <th>Supplier 1</th>
+            <th>Dostawca 1</th>
+            <th>{{cost[0]}}</th>
+            <th>{{cost[1]}}</th>
+        </tr>
+        <tr>
+            <th>Dostawca 2</th>
+            <th>{{cost[2]}}</th>
+            <th>{{cost[3]}}</th>
+        </tr>
+    </table>
+    <br>
+    <h3> Zarobki </h3>
+    <table>
+        <tr>
+            <th>Zarobki</th>
+            <th>Odbiorca 1</th>
+            <th>Odbiorca 2</th>
+            <th>F. Odbiorca</th>
+        </tr>
+        <tr>
+            <th>Dostawca 1</th>
             <td>{{dataForTable[0]}}</td>
             <td>{{dataForTable[1]}}</td>
             <td>{{dataForTable[2]}}</td>
         </tr>
         <tr>
-            <th>Supplier 2</th>
+            <th>Dostawca 2</th>
             <td>{{dataForTable[3]}}</td>
             <td>{{dataForTable[4]}}</td>
             <td>{{dataForTable[5]}}</td>
         </tr>
         <tr>
-            <th>Fake Supplier</th>
+            <th>F. Dostawca</th>
             <td>{{dataForTable[6]}}</td>
             <td>{{dataForTable[7]}}</td>
             <td>{{dataForTable[8]}}</td>
@@ -37,5 +57,5 @@
     </table>
     <h2>Koszt calkowity : {{dataForLabels[0]}}</h2>
     <h2>Przychód całkowity : {{dataForLabels[1]}}</h2>
-    <h2> Calkowity zysk : {{ dataForLabels[2] }} </h2>
+    <h2>Calkowity zysk : {{ dataForLabels[2] }} </h2>
 {% endblock %}
