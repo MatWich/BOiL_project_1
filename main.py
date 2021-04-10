@@ -31,7 +31,6 @@ def my_post_form():
         #             "koszty_zakupu": [15, 10],
         #             "cena_sprzedazy": [30, 22]}
         """ koniec obszaru do zakomentowania """
-
         op = Optymalizacja(dane)
         op.set_up()
         op.calc_primary_delivery_plan()

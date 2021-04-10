@@ -152,7 +152,7 @@ class Optymalizacja:
                 self.get_cycle(highest_X, highest_Y)
 
                 print(f"After iteration {counter} ")
-                self.print_table()
+                #self.print_table()
                 self.calc_all()
                 self.clear()
 
@@ -286,6 +286,7 @@ class Optymalizacja:
     # loops the optCheckGrid if it finds positive number returns true
     def is_optimized(self):
         highest = -999999
+        highest_X, highest_Y = None, None
         for i in range(len(self.wsp_optymalizacji)):
             for j in range(len(self.wsp_optymalizacji[0])):
                 if highest < self.wsp_optymalizacji[i][j]:
